@@ -2,20 +2,21 @@
 import React, { useState } from "react";
 import { appDataDir } from "@tauri-apps/api/path";
 import { writeTextFile } from "@tauri-apps/api/fs";
+import { useSnippetsStore } from "@/store/snippetsStore";
 
 function SnippetForm() {
   const [snippetName, setSnippetName] = useState("");
+  const addSnippetName = useSnippetsStore((state) => state.addSnippetName);
 
   return (
     <form
       onSubmit={async (e) => {
         e.preventDefault();
-        const appDataPath = await appDataDir();
 
-        await writeTextFile(
-          `${appDataPath}taurifiles/${snippetName}.json`,
-          "{}",
-        );
+        const appDataPath = await appDataDir();
+        await writeTextFile(`${appDataPath}taurifiles/${snippetName}.js`, "{}");
+
+        addSnippetName(snippetName);
         setSnippetName("");
       }}
     >
