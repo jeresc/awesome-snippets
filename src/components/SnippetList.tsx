@@ -15,18 +15,18 @@ function SnippetList() {
     async function loadSnippets() {
       const appDataPath = await appDataDir();
       const files = await readDir(await join(appDataPath, "taurifiles"));
-      const filesNames = files.map((file) => file.name!.replace(/\.\w+/, ""));
-      setSnippetsNames(filesNames);
+      const filesnames = files.map((file) => file.name!.replace(/\.\w+/, ""));
+      setSnippetsNames(filesnames);
     }
     loadSnippets();
   }, [setSnippetsNames]);
 
   return (
-    <div>
-      {snippetsNames.map((name) => (
-        <SnippetItem key={name} snippetName={name} />
+    <ul>
+      {snippetsNames.map((name, index) => (
+        <SnippetItem key={index} snippetName={name} />
       ))}
-    </div>
+    </ul>
   );
 }
 

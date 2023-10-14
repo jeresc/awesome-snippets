@@ -4,12 +4,13 @@ import { useSnippetsStore } from "@/store/snippetsStore";
 import { useEffect, useState } from "react";
 import { writeTextFile } from "@tauri-apps/api/fs";
 import { appDataDir, join } from "@tauri-apps/api/path";
+import { TfiPencil } from "react-icons/tfi";
 
 function SnippetEditor() {
   const selectedSnippetName = useSnippetsStore(
     (state) => state.selectedSnippetName,
   );
-  const [code, setCode] = useState<string | undefined>();
+  const [code, setCode] = useState<string | undefined>("");
 
   useEffect(() => {
     if (!selectedSnippetName) return;
@@ -20,7 +21,7 @@ function SnippetEditor() {
         await join(appDataPath, "taurifiles", `${selectedSnippetName.name}.js`),
         code ?? "",
       );
-    }, 100);
+    }, 1000);
     return () => {
       clearTimeout(timer);
     };
@@ -32,11 +33,12 @@ function SnippetEditor() {
           language="typescript"
           theme="vs-dark"
           options={{ fontSize: 20, fontFamily: "JetBrains Mono" }}
-          onChange={setCode}
+          defaultValue="// save your snippet"
+          onChange={(value) => setCode(value)}
           value={selectedSnippetName.code ?? ""}
         />
       ) : (
-        <h2>No snippet selected</h2>
+        <TfiPencil className="text-9xl text-neutral-900" />
       )}
     </>
   );
