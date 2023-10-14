@@ -17,7 +17,7 @@ function SnippetForm() {
       onSubmit={async (e) => {
         e.preventDefault();
 
-        if (!snippetName || snippetName.trim() === "") {
+        if (!snippetName) {
           toast.error("Please enter snippet name", {
             duration: 2000,
             position: "bottom-right",
@@ -72,6 +72,7 @@ function SnippetForm() {
         autoFocus
         value={snippetName}
       />
+      <button type="submit" className="hidden" />
     </form>
   );
 }
