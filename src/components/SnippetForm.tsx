@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { appDataDir } from "@tauri-apps/api/path";
+import { appDataDir, join } from "@tauri-apps/api/path";
 import { writeTextFile } from "@tauri-apps/api/fs";
 import { useSnippetsStore } from "@/store/snippetsStore";
 
@@ -14,7 +14,10 @@ function SnippetForm() {
         e.preventDefault();
 
         const appDataPath = await appDataDir();
-        await writeTextFile(`${appDataPath}taurifiles/${snippetName}.js`, "{}");
+        await writeTextFile(
+          await join(appDataPath, "taurifiles", `${snippetName}.js`),
+          "",
+        );
 
         addSnippetName(snippetName);
         setSnippetName("");
@@ -27,7 +30,6 @@ function SnippetForm() {
         onChange={(e) => setSnippetName(e.target.value)}
         value={snippetName}
       />
-      <button className="hidden">Save</button>
     </form>
   );
 }

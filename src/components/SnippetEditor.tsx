@@ -3,7 +3,7 @@ import Editor from "@monaco-editor/react";
 import { useSnippetsStore } from "@/store/snippetsStore";
 import { useEffect, useState } from "react";
 import { writeTextFile } from "@tauri-apps/api/fs";
-import { appDataDir } from "@tauri-apps/api/path";
+import { appDataDir, join } from "@tauri-apps/api/path";
 
 function SnippetEditor() {
   const selectedSnippetName = useSnippetsStore(
@@ -17,10 +17,10 @@ function SnippetEditor() {
     const timer = setTimeout(async () => {
       const appDataPath = await appDataDir();
       await writeTextFile(
-        `${appDataPath}/taurifiles/${selectedSnippetName}.js`,
+        await join(appDataPath, "taurifiles", `${selectedSnippetName.name}.js`),
         code ?? "",
       );
-    }, 1000);
+    }, 100);
     return () => {
       clearTimeout(timer);
     };
@@ -33,6 +33,7 @@ function SnippetEditor() {
           theme="vs-dark"
           options={{ fontSize: 20, fontFamily: "JetBrains Mono" }}
           onChange={setCode}
+          value={selectedSnippetName.code ?? ""}
         />
       ) : (
         <h2>No snippet selected</h2>

@@ -1,12 +1,17 @@
 import { create } from "zustand";
 
+interface Snippet {
+  name: string;
+  code: string | null;
+}
+
 interface SnippetsStore {
   snippetsNames: string[];
-  selectedSnippetName: string | null;
+  selectedSnippetName: Snippet | null;
   setSnippetsNames: (snippetsNames: string[]) => void;
   addSnippetName: (snippet: string) => void;
-  removeSnippetName: (index: number) => void;
-  setSelectedSnippetName: (name: string | null) => void;
+  removeSnippetName: (snippetName: string) => void;
+  setSelectedSnippetName: (snippet: Snippet | null) => void;
 }
 
 export const useSnippetsStore = create<SnippetsStore>((set) => ({
@@ -20,12 +25,12 @@ export const useSnippetsStore = create<SnippetsStore>((set) => ({
     set((state) => ({
       snippetsNames: [...state.snippetsNames, name],
     })),
-  removeSnippetName: (index: number) =>
+  removeSnippetName: (snippetName: string) =>
     set((state) => ({
-      snippetsNames: state.snippetsNames.filter((_, i) => i !== index),
+      snippetsNames: state.snippetsNames.filter((name) => name !== snippetName),
     })),
-  setSelectedSnippetName: (name: string | null) =>
+  setSelectedSnippetName: (snippet: Snippet | null) =>
     set(() => ({
-      selectedSnippetName: name,
+      selectedSnippetName: snippet,
     })),
 }));

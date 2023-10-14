@@ -5,11 +5,11 @@ import SnippetList from "@/components/SnippetList";
 export default function Home() {
   return (
     <>
-      <aside className="col-span-3 bg-zinc-950">
+      <aside className="col-span-4 bg-zinc-950">
         <SnippetForm />
         <SnippetList />
       </aside>
-      <main className="col-span-9 flex justify-center items-center bg-neutral-950">
+      <main className="col-span-8 flex justify-center items-center bg-neutral-950">
         <SnippetEditor />
       </main>
     </>
