@@ -1,7 +1,15 @@
 import { Toaster } from "react-hot-toast";
-import SnippetEditor from "@/components/SnippetEditor";
-import SnippetForm from "@/components/SnippetForm";
-import SnippetList from "@/components/SnippetList";
+import dynamic from "next/dynamic";
+
+const SnippetEditor = dynamic(() => import("@/components/SnippetEditor"), {
+  ssr: false,
+});
+const SnippetForm = dynamic(() => import("@/components/SnippetForm"), {
+  ssr: false,
+});
+const SnippetList = dynamic(() => import("@/components/SnippetList"), {
+  ssr: false,
+});
 
 export default function Home() {
   return (
