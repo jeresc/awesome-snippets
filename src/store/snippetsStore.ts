@@ -2,12 +2,17 @@ import { create } from "zustand";
 
 interface SnippetsStore {
   snippetsNames: string[];
+  setSnippetsNames: (snippetsNames: string[]) => void;
   addSnippetName: (snippet: string) => void;
   removeSnippetName: (index: number) => void;
 }
 
 export const useSnippetsStore = create<SnippetsStore>((set) => ({
   snippetsNames: [],
+  setSnippetsNames: (snippetsNames: string[]) =>
+    set(() => ({
+      snippetsNames,
+    })),
   addSnippetName: (name: string) =>
     set((state) => ({
       snippetsNames: [...state.snippetsNames, name],
